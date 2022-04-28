@@ -12,6 +12,7 @@ const People = () => {
 		return (
 			<Card style={{ width: "18rem" }}>
 				<Card.Img
+					className="img-fluid"
 					src={person.img}
 					variant="top"
 					width="180"
@@ -34,12 +35,7 @@ const People = () => {
 		);
 	}
 
-	return (
-		<div>
-			<pre>{JSON.stringify(person)}</pre>
-			{getPerson()}
-		</div>
-	);
+	return <div>{getPerson()}</div>;
 };
 
 export default People;

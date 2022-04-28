@@ -12,11 +12,10 @@ import Card from "react-bootstrap/Card";
 import { people } from "../../apiStarWars.js";
 import { Link } from "react-router-dom";
 
-const List = () => {
+const ListPeople = () => {
 	var [data, setData] = useState([]);
 	var [page, setPage] = useState(1);
 	var [pages, setPages] = useState(1);
-	var [paginationItems, setPaginationItems] = useState([]);
 
 	function irAPagina(id) {
 		people.getQuery(id).then((data) => {
@@ -52,7 +51,6 @@ const List = () => {
 
 	useEffect(() => {
 		console.log("Actualizando paginas");
-		actualizarPaginacion();
 		return () => {
 			console.log("Finalizada la actualizacion de paginas");
 		};
@@ -97,7 +95,7 @@ const List = () => {
 				</Pagination.Item>
 			);
 		}
-		setPaginationItems(tmp);
+		return tmp;
 	}
 
 	return (
@@ -107,10 +105,10 @@ const List = () => {
 			</ListGroup>
 			<Pagination>
 				<Pagination.Prev onClick={previaPagina} />
-				{paginationItems}
+				{actualizarPaginacion()}
 				<Pagination.Next onClick={siguientePagina} />
 			</Pagination>
 		</div>
 	);
 };
-export default List;
+export default ListPeople;
