@@ -2,8 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./home.jsx";
 import Layout from "./Layout.jsx";
-import List from "./List.jsx";
-import { People } from "./people";
+import List, { People } from "./people";
 
 //create your first component
 const Index = () => {
