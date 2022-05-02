@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
 	ListGroup,
 	ListGroupItem,
@@ -9,16 +9,18 @@ import {
 	Button,
 } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
-import { people } from "../../apiStarWars.js";
+import { planets } from "../../../apiStarWars.js";
 import { Link } from "react-router-dom";
+import { Context } from "../../../store/appContext";
 
-const ListPeople = () => {
+const ListPlanets = () => {
 	var [data, setData] = useState([]);
 	var [page, setPage] = useState(1);
 	var [pages, setPages] = useState(1);
+	const myStore = useContext(Context);
 
 	function irAPagina(id) {
-		people.getQuery(id).then((data) => {
+		planets.getQuery(id).then((data) => {
 			console.log("Cargando pagina ... ", id);
 			// Se actualizan los valores del estado
 			setData(data.results);
@@ -51,31 +53,44 @@ const ListPeople = () => {
 
 	useEffect(() => {
 		console.log("Actualizando paginas");
+		// actualizarPaginacion();
 		return () => {
 			console.log("Finalizada la actualizacion de paginas");
 		};
 	}, [pages, pages]);
 
+	function agregarFavoritos(planet) {
+		const favorito = {
+			id: `planet/${planet.uid}`,
+			name: planet.name,
+		};
+		myStore.actions.agregarFavorito(favorito);
+	}
+
 	function getItems() {
 		if (!data) return;
-		return data.map((person) => {
+		return data.map((planet) => {
 			return (
-				<ListGroup.Item key={person.uid}>
+				<ListGroup.Item key={planet.uid}>
 					<Card style={{ width: "18rem" }}>
 						<Card.Img
 							className="img-fluid"
 							variant="top"
 							height="50"
-							src={person.img}
+							src={planet.img}
 						/>
 						<Card.Body>
-							<Card.Title>{person.name}</Card.Title>
+							<Card.Title>{planet.name}</Card.Title>
 							<Link
 								className="btn btn-primary"
-								to={`/personas/${person.uid}`}>
+								to={`/planets/${planet.uid}`}>
 								Leer Mas
 							</Link>
-							{/* <Button variant="primary">Leer más</Button> */}
+							<Button
+								variant="warning"
+								onClick={() => agregarFavoritos(planet)}>
+								Star
+							</Button>
 						</Card.Body>
 					</Card>
 				</ListGroup.Item>
@@ -83,10 +98,10 @@ const ListPeople = () => {
 		});
 	}
 
-	function actualizarPaginacion() {
-		var tmp = [];
+	function paginationItems() {
+		var items = [];
 		for (let i = 1; i <= pages; i++) {
-			tmp.push(
+			items.push(
 				<Pagination.Item
 					onClick={() => irAPagina(i)}
 					key={i}
@@ -95,7 +110,7 @@ const ListPeople = () => {
 				</Pagination.Item>
 			);
 		}
-		return tmp;
+		return items;
 	}
 
 	return (
@@ -105,10 +120,10 @@ const ListPeople = () => {
 			</ListGroup>
 			<Pagination>
 				<Pagination.Prev onClick={previaPagina} />
-				{actualizarPaginacion()}
+				{paginationItems()}
 				<Pagination.Next onClick={siguientePagina} />
 			</Pagination>
 		</div>
 	);
 };
-export default ListPeople;
+export default ListPlanets;

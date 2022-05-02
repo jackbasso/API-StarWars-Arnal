@@ -9,16 +9,16 @@ import {
 	Button,
 } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
-import { planets } from "../../apiStarWars.js";
+import { people } from "../../../apiStarWars.js";
 import { Link } from "react-router-dom";
 
-const ListPlanets = () => {
+const ListPeople = () => {
 	var [data, setData] = useState([]);
 	var [page, setPage] = useState(1);
 	var [pages, setPages] = useState(1);
 
 	function irAPagina(id) {
-		planets.getQuery(id).then((data) => {
+		people.getQuery(id).then((data) => {
 			console.log("Cargando pagina ... ", id);
 			// Se actualizan los valores del estado
 			setData(data.results);
@@ -51,7 +51,6 @@ const ListPlanets = () => {
 
 	useEffect(() => {
 		console.log("Actualizando paginas");
-		// actualizarPaginacion();
 		return () => {
 			console.log("Finalizada la actualizacion de paginas");
 		};
@@ -59,21 +58,21 @@ const ListPlanets = () => {
 
 	function getItems() {
 		if (!data) return;
-		return data.map((planet) => {
+		return data.map((person) => {
 			return (
-				<ListGroup.Item key={planet.uid}>
+				<ListGroup.Item key={person.uid}>
 					<Card style={{ width: "18rem" }}>
 						<Card.Img
 							className="img-fluid"
 							variant="top"
 							height="50"
-							src={planet.img}
+							src={person.img}
 						/>
 						<Card.Body>
-							<Card.Title>{planet.name}</Card.Title>
+							<Card.Title>{person.name}</Card.Title>
 							<Link
 								className="btn btn-primary"
-								to={`/planets/${planet.uid}`}>
+								to={`/personas/${person.uid}`}>
 								Leer Mas
 							</Link>
 							{/* <Button variant="primary">Leer más</Button> */}
@@ -84,10 +83,10 @@ const ListPlanets = () => {
 		});
 	}
 
-	function paginationItems() {
-		var items = [];
+	function actualizarPaginacion() {
+		var tmp = [];
 		for (let i = 1; i <= pages; i++) {
-			items.push(
+			tmp.push(
 				<Pagination.Item
 					onClick={() => irAPagina(i)}
 					key={i}
@@ -96,7 +95,7 @@ const ListPlanets = () => {
 				</Pagination.Item>
 			);
 		}
-		return items;
+		return tmp;
 	}
 
 	return (
@@ -106,10 +105,10 @@ const ListPlanets = () => {
 			</ListGroup>
 			<Pagination>
 				<Pagination.Prev onClick={previaPagina} />
-				{paginationItems()}
+				{actualizarPaginacion()}
 				<Pagination.Next onClick={siguientePagina} />
 			</Pagination>
 		</div>
 	);
 };
-export default ListPlanets;
+export default ListPeople;

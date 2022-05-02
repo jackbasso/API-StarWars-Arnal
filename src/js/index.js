@@ -8,6 +8,7 @@ import "../styles/index.css";
 
 //import your own components
 import Index from "./component/index.jsx";
+import Layout from "./Layout.jsx";
 
 //render your react application
-ReactDOM.render(<Index />, document.querySelector("#app"));
+ReactDOM.render(<Layout />, document.querySelector("#app"));

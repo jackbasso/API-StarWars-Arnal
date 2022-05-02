@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { planets } from "../../apiStarWars.js";
+import { planets } from "../../../apiStarWars.js";
 import Card from "react-bootstrap/Card";
+import { Button } from "react-bootstrap";
 
 const Planet = () => {
 	const params = useParams();
@@ -29,7 +30,7 @@ const Planet = () => {
 						to={`/planets/${planet.uid}`}>
 						Leer Mas
 					</Link>
-					{/* <Button variant="primary">Leer más</Button> */}
+					<Button variant="warning">Leer más</Button>
 				</Card.Body>
 			</Card>
 		);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { people } from "../../apiStarWars.js";
+import { people } from "../../../apiStarWars.js";
 import Card from "react-bootstrap/Card";
 
 const People = () => {
